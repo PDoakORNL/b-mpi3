@@ -86,8 +86,9 @@ set(CMAKE_CXX_STANDARD 14)
 foreach(TEST_FILE ${TEST_SRCS})
   SET(TEST_EXE "${TEST_FILE}.x")
   add_executable(${TEST_EXE} ${TEST_FILE})
-  target_compile_options(${TEST_EXE} PUBLIC -Wall -Wextra -Werror -Wfatal-errors) #-Wpedantic
-  target_include_directories(${TEST_EXE} PUBLIC "../../../..")
+  # Newer compilers give waring in boost/archive/helper_collection.hpp and fail so -Werror can't be used
+  target_compile_options(${TEST_EXE} PUBLIC -Wall -Wextra -Wfatal-errors) #-Wpedantic
+  target_include_directories(${TEST_EXE} PUBLIC "${CMAKE_PROJECT_SOURCE_DIR}/..")
 
   list(FIND NEED_BOOST_SERIALIZATION_SRCS ${TEST_FILE} NEED_BOOST_SERIALIZATION)
   if (NOT (${NEED_BOOST_SERIALIZATION} EQUAL -1))
