@@ -86,8 +86,10 @@ set(CMAKE_CXX_STANDARD 14)
 foreach(TEST_FILE ${TEST_SRCS})
   SET(TEST_EXE "${TEST_FILE}.x")
   add_executable(${TEST_EXE} ${TEST_FILE})
-  # Newer compilers give waring in boost/archive/helper_collection.hpp and fail so -Werror can't be used
+  # Newer compilers give waring in boost/archive/helper_collection.hpp and others for deprecated constructors
+  # so -Werror can't be used
   target_compile_options(${TEST_EXE} PUBLIC -Wall -Wextra -Wfatal-errors) #-Wpedantic
+  #i.e. the directory above the <REPOROOT>/test directory, then you can build anywhere you like outside of the source
   target_include_directories(${TEST_EXE} PUBLIC "${CMAKE_PROJECT_SOURCE_DIR}/..")
 
   list(FIND NEED_BOOST_SERIALIZATION_SRCS ${TEST_FILE} NEED_BOOST_SERIALIZATION)
